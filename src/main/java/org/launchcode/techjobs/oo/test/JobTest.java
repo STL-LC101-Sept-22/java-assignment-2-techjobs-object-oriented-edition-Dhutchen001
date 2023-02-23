@@ -46,6 +46,40 @@ public class JobTest {
         assertFalse(testJobFour.getId() == testJobFive.getId());
     }
 
+    @Test
+    public void testToStringStartsAndEndsWithNewLine(){
+        Job testJobFive = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        String stringTestJobFive = testJobFive.toString();
+
+        assertEquals('\n', stringTestJobFive.charAt(0));
+        assertEquals('\n', stringTestJobFive.charAt(testJobFive.toString().length() - 1));
+
+    }
+
+    @Test
+    public void testToStringContainsCorrectLabelsAndData() {
+        Job testJobSix = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        assertEquals("\nID: "+testJobSix.getId()+"\nName: Product tester"+"\nEmployer: ACME"+
+                "\nLocation: Desert"+"\nPosition Type: Quality control" + "\nCore Competency: Persistence\n", testJobSix.toString());
+    }
+
+    @Test
+    public void testToStringHandlesEmptyField() {
+        Job testJobSeven= new Job("Product tester", new Employer(), new Location("Desert"),
+                new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+        assertEquals("\nID: "+testJobSeven.getId()+"\nName: Product tester"+"\nEmployer: Data not available"+
+                "\nLocation: Desert"+"\nPosition Type: Quality control" + "\nCore Competency: Persistence\n", testJobSeven.toString());
+    }
+
+    @Test
+    public void testToStringReturnsMessageIfAllFieldsBlank() {
+        Job testJobEight = new Job();
+        assertEquals("OOPS! This job does not seem to exist.", testJobEight.toString());
+    }
 }
 
 
